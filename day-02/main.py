@@ -42,4 +42,5 @@ def main(data):
 
 
 result = main(input_data)
+
 print(result)
