@@ -22,10 +22,10 @@ def is_safe(levels):
 
 
 # part two
-def is_safe_with_dampener(report):
-    for i in range(len(report)):
-        modified_report = report[:i] + report[i + 1:]
-        if is_safe(modified_report):
+def is_safe_with_dampener(level):
+    for i in range(len(level)):
+        modified_level = level[:i] + level[i + 1:]
+        if is_safe(modified_level):
             return True
     return False
 
