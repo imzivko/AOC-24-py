@@ -1,9 +1,7 @@
 from pathlib import Path
 
-p = Path('./input.txt')
-f = p.read_text()
-
-input_data = f.strip().splitlines()
+f = Path('./input.txt')
+lines = f.read_text().strip().splitlines()
 
 def is_safe(levels):
     increasing = True
@@ -41,6 +39,6 @@ def main(data):
     return safe_count
 
 
-result = main(input_data)
+result = main(lines)
 
 print(result)
