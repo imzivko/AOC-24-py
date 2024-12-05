@@ -2,8 +2,9 @@ import re
 from pathlib import Path
 from itertools import accumulate
 
-f = Path('./input.txt')
+f = Path("./input.txt")
 lines = f.read_text()
+
 
 def filter_list(data):
     filtered_list = []
@@ -13,7 +14,7 @@ def filter_list(data):
         if line == "don't()":
             is_inside_dont = True
         elif line == "do()":
-            is_inside_dont  = False
+            is_inside_dont = False
             continue
         if not is_inside_dont:
             filtered_list.append(line)
@@ -22,7 +23,10 @@ def filter_list(data):
 
 
 def main(data):
-    pairs = re.findall(r"\d+,\d+|do\(\)|don't\(\)", "".join(re.findall(r"mul\(\d+,\d+\)|do\(\)|don't\(\)", data)))
+    pairs = re.findall(
+        r"\d+,\d+|do\(\)|don't\(\)",
+        "".join(re.findall(r"mul\(\d+,\d+\)|do\(\)|don't\(\)", data)),
+    )
 
     # part two pairs
     filtered_pairs = filter_list(pairs)
@@ -35,6 +39,7 @@ def main(data):
     ans = list(accumulate(pair_factors))[-1]
 
     return ans
+
 
 result = main(lines)
 

@@ -1,7 +1,8 @@
 from pathlib import Path
 
-f = Path('./input.txt')
+f = Path("./input.txt")
 lines = f.read_text().strip().split()
+
 
 def main(data):
     left = []
@@ -26,6 +27,7 @@ def main(data):
         ans += abs(int(first) * right.count(first))
 
     return ans
+
 
 result = main(lines)
 

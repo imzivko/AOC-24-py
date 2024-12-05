@@ -1,7 +1,8 @@
 from pathlib import Path
 
-f = Path('./input.txt')
+f = Path("./input.txt")
 lines = f.read_text().strip().splitlines()
+
 
 def is_safe(levels):
     increasing = True
@@ -22,7 +23,7 @@ def is_safe(levels):
 # part two
 def is_safe_with_dampener(level):
     for i in range(len(level)):
-        modified_level = level[:i] + level[i + 1:]
+        modified_level = level[:i] + level[i + 1 :]
         if is_safe(modified_level):
             return True
     return False
