@@ -51,10 +51,8 @@ def part_two(ans, rules):
             if len(valid_page_rules):
                 valid_page.append(list((map(lambda x: x[0], valid_page_rules))))
 
-        # Sort the lists by their length
         sorted_lists = sorted(valid_page, key=len, reverse=True)
 
-        # Extract the first element from each sublist
         res = [sublist[0] for sublist in sorted_lists]
 
         out.append(res)
