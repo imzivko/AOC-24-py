@@ -4,40 +4,23 @@ f = Path("./input.txt")
 
 test = f.read_text().splitlines()
 
-print(test[52][48])
-
-
-# test = """
-# ....#.....
-# .........#
-# ..........
-# ..#.......
-# .......#..
-# ..........
-# .#..^.....
-# ........#.
-# #.........
-# ......#...
-# """.strip().splitlines()
-
-# 41
-
 
 def visualize(coords):
-    test_copy = [[x for x in k] for k in test]
+    test_copy = [[x for x in row] for row in test]
 
     for x, y in coords:
-        if x and y:
-            test_copy[y][x] = test_copy[y][x].replace(".", "x")
+        if 0 <= x < len(test_copy[0]) and 0 <= y < len(test_copy):
+            test_copy[y][x] = test_copy[y][x].replace(".", "X")
 
-    for ds in test_copy:
-        print("".join(ds))
+    for row in test_copy:
+        print("".join(row))
 
 
 def find_initial_cords(rows):
-    for idx, r in enumerate(rows):
-        if "^" in r:
-            return r.index("^"), idx
+    for idx, row in enumerate(rows):
+        if "^" in row:
+            return row.index("^"), idx
+    return None, None
 
 
 def main(grid):
@@ -48,18 +31,15 @@ def main(grid):
     init_x, init_y = find_initial_cords(grid)
 
     def is_out(c, r):
-        print(c, r)
-        # here
-        return r < 0 or r >= rows - 1 or c < 0 or c >= cols - 1
+        return r < 0 or r >= rows or c < 0 or c >= cols
 
     directions = [
-        (0, -1),
-        (1, 0),
-        (0, 1),
-        (-1, 0),
+        (0, -1),  # Up
+        (1, 0),  # Right
+        (0, 1),  # Down
+        (-1, 0),  # Left
     ]
 
-    # first is always up
     current_direction = 0
 
     def rotate_direction():
@@ -69,33 +49,30 @@ def main(grid):
     def move(x, y):
         nonlocal current_direction
 
-        if is_out(x, y):
-            print("out")
+        dx, dy = directions[current_direction]
+        next_x, next_y = x + dx, y + dy
+
+        if is_out(next_x, next_y):
             return False
 
-        pos.append((x, y))
-
-        if (
-            grid[y + directions[current_direction][1]][
-                x + directions[current_direction][0]
-            ]
-            == "#"
-        ):
+        if grid[next_y][next_x] == "#":
             rotate_direction()
+            return move(x, y)
 
+        pos.append((next_x, next_y))
+
+        return True
+
+    x, y = init_x, init_y
+    pos.append((x, y))
+
+    while move(x, y):
         dx, dy = directions[current_direction]
-        return move(x + dx, y + dy)
+        x, y = x + dx, y + dy
 
-    move(init_x, init_y)
-
-    print(pos)
     visualize(pos)
 
-    with f.open("w") as file:
-        for line in grid:
-            file.write(line + "\n")
-
-    return len(set(pos)) + 1
+    return len(set(pos))
 
 
 result = main(test)
