@@ -20,11 +20,10 @@ def find_initial_cords(rows):
     for idx, row in enumerate(rows):
         if "^" in row:
             return row.index("^"), idx
-    return None, None
 
 
 def main(grid):
-    pos = []
+    positions = []
     rows = len(grid)
     cols = len(grid[0])
 
@@ -59,20 +58,20 @@ def main(grid):
             rotate_direction()
             return move(x, y)
 
-        pos.append((next_x, next_y))
+        positions.append((next_x, next_y))
 
         return True
 
     x, y = init_x, init_y
-    pos.append((x, y))
+    positions.append((x, y))
 
     while move(x, y):
         dx, dy = directions[current_direction]
         x, y = x + dx, y + dy
 
-    visualize(pos)
+    visualize(positions)
 
-    return len(set(pos))
+    return len(set(positions))
 
 
 result = main(test)
